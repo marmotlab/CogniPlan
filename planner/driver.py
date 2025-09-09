@@ -8,9 +8,6 @@ import os
 import numpy as np
 import random
 import wandb
-import sys
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from .model import PolicyNet, QNet
 from .runner import RLRunner

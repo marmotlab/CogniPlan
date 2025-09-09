@@ -10,12 +10,20 @@ from .env import Env
 from .agent import Agent
 from .ground_truth_node_manager import GroundTruthNodeManager
 from .utils import *
-from .parameter import *
 from mapinpaint.networks import Generator
 from mapinpaint.evaluator import Evaluator
 
 # Other configuration settings in parameter.py
-model_name = 'cogniplan_exp_pred7'
+FOLDER_NAME = 'cogniplan_exp_pred7'
+model_path = f'checkpoints/{FOLDER_NAME}'
+log_path = f'{model_path}/log'
+gif_path = f'{model_path}/gif'
+generator_path = f'checkpoints/wgan_inpainting'
+N_GEN_SAMPLE = 4  # how many samples do you want to generate
+
+NODE_INPUT_DIM = 6
+EMBEDDING_DIM = 128
+
 NUM_TEST = 150
 NUM_META_AGENT = 10  # number of parallel tests, NUM_TEST % NUM_META_AGENT should be 0
 SAFE_MODE = True
@@ -29,7 +37,7 @@ def run_test():
     device = torch.device('cpu')
     global_network = PolicyNet(NODE_INPUT_DIM, EMBEDDING_DIM).to(device)
 
-    print(f"Testing on {device}, model: {model_name}, num of tests: {NUM_TEST}, num of samples: {N_GEN_SAMPLE}")
+    print(f"Testing on {device}, model: {model_path}, num of tests: {NUM_TEST}, num of samples: {N_GEN_SAMPLE}")
     print(f"Loading model from {model_path}")
     checkpoint = torch.load(f'{model_path}/checkpoint.pth', weights_only=True, map_location=device)
 
