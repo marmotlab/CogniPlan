@@ -1,33 +1,21 @@
 import ray
 import torch
 import yaml
-import os
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from .model import PolicyNet
 from .env import Env
 from .agent import Agent
 from .ground_truth_node_manager import GroundTruthNodeManager
 from .utils import *
+from .parameter import *
 from mapinpaint.networks import Generator
 from mapinpaint.evaluator import Evaluator
 
 # Other configuration settings in parameter.py
-FOLDER_NAME = 'cogniplan_exp_pred7'
-model_path = f'checkpoints/{FOLDER_NAME}'
-log_path = f'{model_path}/log'
-gif_path = f'{model_path}/gif'
-generator_path = f'checkpoints/wgan_inpainting'
-N_GEN_SAMPLE = 4  # how many samples do you want to generate
-
-NODE_INPUT_DIM = 6
-EMBEDDING_DIM = 128
-
-NUM_TEST = 150
-NUM_META_AGENT = 10  # number of parallel tests, NUM_TEST % NUM_META_AGENT should be 0
+NUM_TEST = 1
+NUM_META_AGENT = 1  # number of parallel tests, NUM_TEST % NUM_META_AGENT should be 0
 SAFE_MODE = True
-SAVE_GIFS = False
+SAVE_GIFS = True
 
 if SAVE_GIFS:
     os.makedirs(gif_path, exist_ok=True)
