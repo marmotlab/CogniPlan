@@ -36,7 +36,7 @@ cd CogniPlan
 git checkout navigation
 ```
 
-Download the checkpoints and datasets using the scripts below.
+Download the required checkpoints and datasets using the scripts below.
 It will unpack them to the corresponding directories automatically.
 
 ```bash
@@ -48,7 +48,7 @@ You can also manually download and unpack the files from our release page.
 
 ### Training
 
-Set parameters in `planner/parameter.py` as needed, and run:
+Configure planner training parameters in `planner/parameter.py` as needed, then run:
 
 ```bash
 python -m planner.driver
@@ -62,9 +62,9 @@ To evaluate our pre-trained model, run:
 python -m planner.test_driver
 ```
 
-> Note: If you want to debug in PyCharm, edit the run configuration kind from script to **module**, 
+> Note: If you want to debug in PyCharm, edit the run configuration kind from Script to **Module**, 
 > and set `planner.xxx` or `mapinpaint.xxx` as the module name.
-> Set the working directory to the **root** of this repository.
+> Make sure the working directory is set to the **root** of this repository.
 
 
 ## Citation
