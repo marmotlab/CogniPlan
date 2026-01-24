@@ -54,13 +54,13 @@ You can also manually download and unpack the files from our release page.
 
 ### Training
 
-Set parameters in `planner/parameter.py` as needed, and run:
+Configure planner training parameters in `planner/parameter.py` as needed, then run:
 
 ```bash
 python -m planner.driver
 ```
 
-To train the inpainting module, run:
+To train the inpainting module, adjust settings in `mapinpaint/config.yaml`, then run:
 
 ```bash
 python -m mapinpaint.train
@@ -68,11 +68,12 @@ python -m mapinpaint.train
 
 ### Evaluation
 
-To evaluate our pre-trained model, run:
+To evaluate our pre-trained model, set `FOLDER_NAME = "cogniplan_exp_pred7"` in `planner/parameter.py`, and then run:
 
 ```bash
 python -m planner.test_driver
 ```
+By default, it tests 150 maps in dataset/maps_eval, as specified in the parameters in planner/test_driver.py.
 
 To evaluate the inpainting module, run:
 
@@ -80,9 +81,9 @@ To evaluate the inpainting module, run:
 python -m mapinpaint.evaluator
 ```
 
-> Note: If you want to debug in PyCharm, edit the run configuration kind from script to **module**, 
+> Note: If you want to debug in PyCharm, edit the run configuration kind from Script to **Module**, 
 > and set `planner.xxx` or `mapinpaint.xxx` as the module name.
-> Set the working directory to the **root** of this repository.
+> Make sure the working directory is set to the **root** of this repository.
 
 
 ## Citation

@@ -12,10 +12,10 @@ from mapinpaint.networks import Generator
 from mapinpaint.evaluator import Evaluator
 
 # Other configuration settings in parameter.py
-NUM_TEST = 1
-NUM_META_AGENT = 1  # number of parallel tests, NUM_TEST % NUM_META_AGENT should be 0
-SAFE_MODE = True
-SAVE_GIFS = True
+NUM_TEST = 150
+NUM_META_AGENT = 10  # number of parallel tests, NUM_TEST % NUM_META_AGENT should be 0
+SAFE_MODE = True     # whether to enable safe mode (loop detection)
+SAVE_GIFS = False    # whether to save gifs of the testing episodes
 
 if SAVE_GIFS:
     os.makedirs(gif_path, exist_ok=True)
