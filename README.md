@@ -7,7 +7,8 @@
 
 ## News / ToDo
 
-- [ ] Release ROS simulation code.
+- [ ] Stay tuned for more updates.
+- [x] [31 Jan 2026] Release ROS noetic simulation code for exploration ([noetic branch](https://github.com/marmotlab/CogniPlan/tree/noetic)).
 - [x] [9 Sep 2025] Release code and model for navigation ([navigation branch](https://github.com/marmotlab/CogniPlan/tree/navigation)).
 - [x] [6 Sep 2025] Release code and model for exploration ([main branch](https://github.com/marmotlab/CogniPlan/tree/main)).
 - [x] [4 Aug 2025] CogniPlan is accepted to CoRL 2025!
