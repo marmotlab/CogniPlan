@@ -1,6 +1,6 @@
 # CogniPlan: Predict Layouts Before Plan
 
-### [Paper](https://arxiv.org/pdf/2508.03027) | [Project Page](https://yizhuo-wang.com/cogniplan/)
+### [Paper](https://openreview.net/pdf?id=uA9GZEmGiT) | [Project Page](https://yizhuo-wang.com/cogniplan/)
 
 > CogniPlan: Uncertainty-Guided Path Planning with Conditional Generative Layout Prediction
 
