@@ -5,85 +5,94 @@
 > CogniPlan: Uncertainty-Guided Path Planning with Conditional Generative Layout Prediction
 
 
-## News / ToDo
-
-- [ ] Release ROS simulation code.
-- [x] [9 Sep 2025] Release code and model for navigation ([navigation branch](https://github.com/marmotlab/CogniPlan/tree/navigation)).
-- [x] [6 Sep 2025] Release code and model for exploration ([main branch](https://github.com/marmotlab/CogniPlan/tree/main)).
-- [x] [4 Aug 2025] CogniPlan is accepted to CoRL 2025!
+This branch hosts the ROS simulation for CogniPlan's exploration tasks. It implements a LiDAR-based 2D exploration planner that leverages learned conditional layout imagination.
+The code is built upon [ARiADNE-ROS-Planner](https://github.com/marmotlab/ARiADNE-ROS-Planner).
+We tested the code with ROS noetic on Ubuntu 20.04 ([installation](https://wiki.ros.org/noetic/Installation/Ubuntu)).
 
 ## Setup
 
-### Environment
+### Prerequisites
 
-We use conda/mamba to manage the environment.
-The required packages are listed below.
-We have tested multiple versions without major issues, so you may adjust them as needed.
+We use [OctoMap](https://octomap.github.io/) for occupancy mapping:
 
 ```bash
-conda create -n cogniplan python=3.12 scikit-image imageio pandas tensorboard matplotlib
-conda activate cogniplan
-pip install torch torchvision opencv-python ray wandb
+sudo apt-get install ros-noetic-octomap
 ```
 
-### Checkpoints and Datasets
+You will also need to install `torch (cpu), torchvision, scikit-learn, matplotlib`.
+An isolated environment is recommended.
+You can refer to the following commands:
 
-Clone this repository and navigate to the directory.
+```bash
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+pip install scikit-learn matplotlib
+```
+
+Then, clone this repo, checkout noetic branch, and compile.
 
 ```bash
 git clone https://github.com/marmotlab/CogniPlan
 cd CogniPlan
+git checkout noetic
+catkin_make
 ```
 
-Download the required checkpoints and datasets using the scripts below.
+### Checkpoints
+
+Download the model checkpoints using the scripts below. 
 It will unpack them to the corresponding directories automatically.
 
 ```bash
-# Default: checkpoints + maps_train + maps_eval
-bash dataset/download.sh
-
-# Optional datasets: for inpainting module training/evaluation
-bash dataset/download.sh optional
-
-# Everything
-bash dataset/download.sh all
+bash src/scripts/model/download.sh
 ```
 
 You can also manually download and unpack the files from our release page.
-
-
-### Training
-
-Set parameters in `planner/parameter.py` as needed, and run:
+The file structure should look like this:
 
 ```bash
-python -m planner.driver
+├── ...
+└── src
+    ├── CMakeLists.txt
+    ├── package.xml
+    ├── launch
+    │   ├── rl_planner.launch
+    │   ├── ...
+    ├── rviz
+    │   └── rviz.rviz
+    └── scripts
+        ├── model
+        │   ├── checkpoint.pth
+        │   ├── config.yaml
+        │   ├── download.sh
+        │   └── generator.pt
+        ├── agent.py
+        ├── ...
+
 ```
 
-To train the inpainting module, run:
+### Run
+
+We validate the planner in CMU exploration environment: https://www.cmu-exploration.com/. 
+Please follow the instructions on their page to set up the simulation environment, where they provide different large scale environments, SLAM, local planner, etc.
+Our package will output the waypoints to their local planner for execution.
+
+To run the simulation, go to their development directory in a terminal and run:
 
 ```bash
-python -m mapinpaint.train
+source devel/setup.bash && roslaunch vehicle_simulator system_indoor.launch
 ```
 
-### Evaluation
-
-To evaluate our pre-trained model, run:
+In another terminal, go to our package directory and run:
 
 ```bash
-python -m planner.test_driver
+source devel/setup.bash && roslaunch rl_planner rl_planner.launch
 ```
 
-To evaluate the inpainting module, run:
+We also provide launch files in CMU forest and one [HPHS](https://github.com/bit-lsj/HPHS) environment.
 
-```bash
-python -m mapinpaint.evaluator
-```
-
-> Note: If you want to debug in PyCharm, edit the run configuration kind from script to **module**, 
-> and set `planner.xxx` or `mapinpaint.xxx` as the module name.
-> Set the working directory to the **root** of this repository.
-
+**Known issue:** The test maps are a bit OOD compared to the data our inpainting module was trained on. 
+For improved performance, retraining the module with more domain-relevant data may be necessary. 
+We might release more generalizable checkpoints in the future to help mitigate this domain shift.
 
 ## Citation
 
@@ -96,11 +105,3 @@ python -m mapinpaint.evaluator
   organization={PMLR}
 }
 ```
-
-### Authors
-[Yizhuo Wang](https://www.yizhuo-wang.com/),
-[Haodong He](https://hehaodong2004.github.io/),
-[Jingsong Liang](https://jingsongliang.com/),
-[Yuhong Cao](https://www.yuhongcao.online/),
-[Ritabrata Chakraborty](https://in.linkedin.com/in/ritabrata-chakraborty-a63268251/),
-[Guillaume Sartoretti](https://cde.nus.edu.sg/me/staff/sartoretti-guillaume-a/)
