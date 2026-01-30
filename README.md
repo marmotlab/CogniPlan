@@ -13,6 +13,8 @@
 - [x] [6 Sep 2025] Release code and model for exploration ([main branch](https://github.com/marmotlab/CogniPlan/tree/main)).
 - [x] [4 Aug 2025] CogniPlan is accepted to CoRL 2025!
 
+![diagram](dataset/diagram.webp)
+
 ## Setup
 
 ### Environment
