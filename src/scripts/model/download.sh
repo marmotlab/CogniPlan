@@ -19,14 +19,12 @@ have() { command -v "$1" >/dev/null 2>&1; }
 
 download() {
   echo "→ Downloading ${ASSET}"
-  if have aria2c; then
-    aria2c -x 16 -s 16 -k 1M -c -o "${CACHE_FILE}" "${URL}"
-  elif have wget; then
+  if have wget; then
     wget -c -O "${CACHE_FILE}" "${URL}"
   elif have curl; then
     curl -L --retry 5 --retry-delay 2 -C - -o "${CACHE_FILE}" "${URL}"
   else
-    echo "Please install aria2c / wget / curl" >&2
+    echo "Please install wget or curl" >&2
     exit 1
   fi
 }
